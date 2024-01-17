@@ -21,8 +21,7 @@ export class ScrollService {
 
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          const nextCountObserve = state.value.countObserve + 1;
-          state.next({ countObserve: nextCountObserve, elementVisible: true });
+          state.next({ countObserve: state.value.countObserve + 1, elementVisible: true });
         } else {
           state.next({ countObserve: state.value.countObserve, elementVisible: false });
         }
