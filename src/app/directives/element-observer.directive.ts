@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, tap } from 'rxjs';
 import { ScrollService } from '../services/scroll.service';
 import { ObserveElementRef, StateObserveElement } from '../models';
 
@@ -26,13 +26,13 @@ export class ElementObserverDirective implements OnInit, OnDestroy {
     const elementNode = this._el.nativeElement;
 
     this._observeRef = this._scrollService.observeElement(elementNode, portalNode);
-    this.elementVisible$ = this._observeRef.elementVisible$;
+    this.elementVisible$ = this._observeRef.value$;
 
     const subsValue = this._observeRef.value$.subscribe(stateObserveElement => {
       if (this.showOnce === false) this._toggleElement(portalNode, stateObserveElement);
     });
 
-    const subsElementVisible = this.elementVisible$.subscribe(stateObserveElement => {
+    const subsElementVisible = this._observeRef.elementVisible$.subscribe(stateObserveElement => {
       if (this.showOnce === true) {
         this._toggleElement(portalNode, stateObserveElement);
         this._destroy();
