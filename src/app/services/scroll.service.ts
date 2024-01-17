@@ -14,8 +14,6 @@ export class ScrollService {
 
     const state = new BehaviorSubject<StateObserveElement>({ countObserve: 0, elementVisible: false });
 
-    let countObserve = 0;
-
     const observer = new IntersectionObserver((entries, observer) => {
       closeObserve = () => {
         observer.disconnect();
@@ -23,10 +21,10 @@ export class ScrollService {
 
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          countObserve = countObserve + 1;
-          state.next({ countObserve, elementVisible: true });
+          const nextCountObserve = state.value.countObserve + 1;
+          state.next({ countObserve: nextCountObserve, elementVisible: true });
         } else {
-          state.next({ countObserve, elementVisible: false });
+          state.next({ countObserve: state.value.countObserve, elementVisible: false });
         }
       });
     }, { root: parent });
