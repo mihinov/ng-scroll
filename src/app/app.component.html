@@ -1,0 +1,34 @@
+<div class="portal" #portal1>
+  <div class="scroll">
+    <div
+      class="element"
+      #element1="elementVisible"
+      elementVisible
+      [portal]="portal1"
+      [activeClass]="'portal_active'"
+    >Lorem, ipsum.</div>
+  </div>
+</div>
+
+<p>
+  Счётчик количества появлений:
+  <span>
+    @if (element1.elementVisible$ | async; as element1Visible) {
+      {{ element1Visible.countObserve }}
+    }
+  </span>
+</p>
+
+
+<div class="portal" #portal2>
+  <div class="scroll">
+    <div
+      class="element"
+      #element2="elementVisible"
+      elementVisible
+      [portal]="portal2"
+      [showOnce]="true"
+      [activeClass]="'portal_active'"
+    >Один раз</div>
+  </div>
+</div>
