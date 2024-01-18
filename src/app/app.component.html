@@ -13,8 +13,8 @@
 <p>
   Счётчик количества появлений:
   <span>
-    @if (element1.elementVisible$ | async; as element1Visible) {
-      {{ element1Visible.countObserve }}
+    @if (element1.state$ | async; as element1State) {
+      {{ element1State.countObserve }}
     }
   </span>
 </p>

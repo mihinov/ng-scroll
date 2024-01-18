@@ -12,7 +12,7 @@ export class ElementObserverDirective implements OnInit, OnDestroy {
   @Input({ required: true }) portal!: Element;
   @Input({ required: true }) activeClass!: string;
   @Input() showOnce: boolean = false;
-  public elementVisible$!: Observable<StateObserveElement>;
+  public state$!: Observable<StateObserveElement>;
   private _observeRef!: ObserveElementRef;
   private _subs: Subscription = new Subscription();
 
@@ -26,7 +26,7 @@ export class ElementObserverDirective implements OnInit, OnDestroy {
     const elementNode = this._el.nativeElement;
 
     this._observeRef = this._scrollService.observeElement(elementNode, portalNode);
-    this.elementVisible$ = this._observeRef.value$;
+    this.state$ = this._observeRef.value$;
 
     const subsValue = this._observeRef.value$.subscribe(stateObserveElement => {
       if (this.showOnce === false) this._toggleElement(portalNode, stateObserveElement);
